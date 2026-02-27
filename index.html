@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>恐惧岛 · 互动小说</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", Arial, sans-serif;
+        }
+        body {
+            background-color: #000;
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.8;
+            font-size: 16px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: #111;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(255,255,255,0.1);
+        }
+        .title {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: #fff;
+            border-bottom: 1px solid #333;
+            padding-bottom: 15px;
+        }
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 30px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .fear-value {
+            color: #ff6b6b;
+        }
+        .awake-value {
+            color: #4ecdc4;
+        }
+        .chapter {
+            margin-bottom: 40px;
+            display: none; /* 默认隐藏所有章节，通过JS控制显示 */
+        }
+        .chapter.active {
+            display: block; /* 激活当前章节 */
+        }
+        .chapter-title {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: #fff;
+            text-align: center;
+        }
+        .chapter-desc {
+            margin-bottom: 25px;
+            text-indent: 2em;
+        }
+        .option-group {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .option-btn {
+            padding: 12px 30px;
+            background-color: #333;
+            color: #fff;
+            border: 1px solid #555;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .option-btn:hover {
+            background-color: #555;
+            border-color: #777;
+            transform: translateY(-2px);
+        }
+        .ending {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #222;
+            border-radius: 6px;
+            display: none;
+        }
+        .ending.active {
+            display: block;
+        }
+        .footer-note {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #999;
+            text-align: center;
+        }
+        .narration {
+            color: #ccc;
+            font-style: italic;
+            margin-top: 15px;
+            padding-left: 2em;
+        }
+        .chapter-tip {
+            text-align: center;
+            color: #999;
+            margin: 20px 0;
+            font-size: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">恐惧岛 · 互动小说</h1>
+        
+        <!-- 数值统计区 -->
+        <div class="stats">
+            <div class="fear-value">恐惧值: <span id="fearCount">0</span></div>
+            <div class="awake-value">清醒值: <span id="awakeCount">0</span></div>
+        </div>
+
+        <!-- 第一章：出门 -->
+        <div class="chapter" id="chapter1">
+            <h2 class="chapter-title">恐惧岛 · 第一章：出门</h2>
+            <p class="chapter-desc">（页面顶部固定标题，黑底白字，无多余装饰）</p>
+            <p class="chapter-desc"><strong>恐惧岛</strong></p>
+            <p class="chapter-desc">▸ 这里没有怪兽，只有你每天都会遇到的事</p>
+            <p class="chapter-desc">清晨的光透过窗帘缝落进来，你坐在床边，盯着椅背上那件碎花短裙——是去年夏天买的，面料轻薄，裙摆到膝盖，是你很喜欢的样子。</p>
+            <p class="chapter-desc">你伸手摸了摸布料，指尖能感受到阳光的温度。</p>
+            <p class="chapter-desc">但下一秒，脑子里自动跳出一串话，像刻在骨子里的提醒：</p>
+            <p class="chapter-desc">「穿这么短，走在路上会被看的吧？」</p>
+            <p class="chapter-desc">「万一遇到不怀好意的人怎么办？」</p>
+            <p class="chapter-desc">「还是穿得“普通”点，安全。」</p>
+            <p class="chapter-desc">这些话没人逼你记，是从小到大，从无数次提醒、无数个眼神、无数个“为你好”里，自己慢慢攒下来的。</p>
+            <p class="chapter-desc">今天是周末，你只是想去楼下的便利店买瓶牛奶，再绕到公园坐十分钟。</p>
+            <p class="chapter-desc">没有危险的目的地，没有特殊的场合，只是一次最普通的出门。</p>
+            <p class="chapter-desc">但你站在衣柜前，开始犹豫。</p>
+
+            <div class="option-group">
+                <button class="option-btn" onclick="chooseOption(1, 'A')">选项A：就这样出门</button>
+                <button class="option-btn" onclick="chooseOption(1, 'B')">选项B：换上长裤和外套</button>
+            </div>
+
+            <!-- 选项A结局 -->
+            <div class="ending" id="chapter1A">
+                <p class="chapter-desc">你把短裙套上，对着镜子扯了扯裙摆，深吸一口气，推门出去。</p>
+                <p class="chapter-desc">小区的路上人不多，晨练的老人、遛狗的邻居、骑着电动车的外卖员。</p>
+                <p class="chapter-desc">你刻意放慢脚步，却还是能感觉到几道目光落在你身上——不是恶意的，但带着打量，像在确认“这个女孩穿了什么”。</p>
+                <p class="chapter-desc">走到路口，一个骑摩托车的男人经过，冲你吹了声口哨，车速慢下来，回头看了一眼。</p>
+                <p class="chapter-desc">你攥紧了手里的钥匙，把钥匙尖朝外握在掌心，脚步不自觉地加快。</p>
+                <p class="chapter-desc">便利店就在眼前，你走进去，冷气裹着奶香扑过来，才稍微松了口气。</p>
+                <p class="chapter-desc">买完牛奶出来，你没去公园，直接转身往家走。</p>
+                <p class="chapter-desc">不是不想去，是突然觉得，好像有无数双眼睛在背后，让你坐不住。</p>
+                <p class="narration">▸ 【恐惧值 +1】</p>
+                <p class="narration">▸ 旁白：你只是想穿喜欢的衣服出门，却要全程提着心。这不是“敏感”，是你早就学会了，要为自己的“选择”警惕。</p>
+                <div class="option-group" style="margin-top: 30px;">
+                    <button class="option-btn" onclick="nextChapter(2)">进入下一章</button>
+                </div>
+            </div>
+
+            <!-- 选项B结局 -->
+            <div class="ending" id="chapter1B">
+                <p class="chapter-desc">你把短裙放回衣柜，翻出一条洗得发白的牛仔裤，又套了件宽松的连帽卫衣，把头发扎进帽子里。</p>
+                <p class="chapter-desc">镜子里的自己，裹得严严实实，看不出身形，也看不出喜欢的样子。</p>
+                <p class="chapter-desc">但你心里的那点不安，确实少了一点。</p>
+                <p class="chapter-desc">推门出去，路上的人匆匆走过，没人看你，没人打量你，没人对你吹口哨。</p>
+                <p class="chapter-desc">你走到便利店，买了牛奶，绕到公园的长椅上坐下。阳光落在身上，暖乎乎的，很舒服。</p>
+                <p class="chapter-desc">但你低头看着自己的牛仔裤，突然有点闷。</p>
+                <p class="chapter-desc">你不是冷，也不是不喜欢卫衣，只是——你明明只是想穿一条普通的裙子，却要先用“隐藏自己”来换一份心安。</p>
+                <p class="narration">▸ 【清醒值 +1】</p>
+                <p class="narration">▸ 旁白：你换来了“安全”的目光，却也清楚地知道，这份安全，是靠藏起自己换来的。</p>
+                <div class="option-group" style="margin-top: 30px;">
+                    <button class="option-btn" onclick="nextChapter(2)">进入下一章</button>
+                </div>
+            </div>
+        </div><!-- 第二章：夜晚回家 -->
+        <div class="chapter" id="chapter2">
+            <h2 class="chapter-title">恐惧岛 · 第二章：夜晚回家</h2>
+            <p class="chapter-desc">（承接上一章，界面依旧：黑底白字，极简，无多余音效）</p>
+            <p class="chapter-desc"><strong>恐惧岛</strong></p>
+            <p class="chapter-desc">▸ 这里没有怪兽，只有你每天都会遇到的事</p>
+            <p class="chapter-desc">加班结束时，窗外已经全黑。</p>
+            <p class="chapter-desc">手机屏幕亮着：<strong>21:30</strong>。</p>
+            <p class="chapter-desc">你收拾好东西，走出写字楼。</p>
+            <p class="chapter-desc">晚风一吹，凉意贴在皮肤上，整个人瞬间绷紧了一点。</p>
+            <p class="chapter-desc">地铁站离家还有一小段路。</p>
+            <p class="chapter-desc">一条大路，路灯密集，偶尔有行人，只是绕远，要多走十分钟。</p>
+            <p class="chapter-desc">一条小巷，近很多，穿过去直接到小区后门，只是里面昏暗，几乎没人。</p>
+            <p class="chapter-desc">你站在路口，没有坏人追上来，没有危险发生。</p>
+            <p class="chapter-desc">但你心里已经开始盘算：</p>
+            <p class="chapter-desc" style="text-align: center; font-weight: bold;">哪条路，更安全。</p>
+
+            <div class="option-group">
+                <button class="option-btn" onclick="chooseOption(2, 'A')">选项A：走大路，路灯亮，人多一点</button>
+                <button class="option-btn" onclick="chooseOption(2, 'B')">选项B：走小巷，近，更快到家</button>
+            </div>
+
+            <!-- 选项A结局 -->
+            <div class="ending" id="chapter2A">
+                <p class="chapter-desc">你拐向大路。</p>
+                <p class="chapter-desc">路灯一盏接一盏，把路面照得发白。</p>
+                <p class="chapter-desc">偶尔有晚归的人、驶过的车，听起来热闹，却不能让你完全放松。</p>
+                <p class="chapter-desc">你刻意走在靠近路灯的一侧，耳朵竖着，听身后的脚步声。</p>
+                <p class="chapter-desc">每一次有人从后面靠近，你都会下意识攥紧包，加快脚步，直到对方超过你，才悄悄松一口气。</p>
+                <p class="chapter-desc">一路上，你回头看了三次。</p>
+                <p class="chapter-desc">没有跟踪，没有异样，什么都没有。</p>
+                <p class="chapter-desc">直到看见小区亮着灯的大门，你才真正把悬着的心放下来。</p>
+                <p class="chapter-desc">进门，上楼，掏出钥匙，打开家门。</p>
+                <p class="chapter-desc">“咔嗒”一声反锁后，你靠着门站了几秒。</p>
+                <p class="chapter-desc">你安全到家了。</p>
+                <p class="chapter-desc">可从头到尾，你都没有真正放松过。</p>
+                <p class="narration">▸ 【恐惧值 +1】</p>
+                <p class="narration">▸ 旁白：大路也不能让你安心。你怕的不是黑暗，是不知道什么时候会出现的恶意。</p>
+                <div class="option-group" style="margin-top: 30px;">
+                    <button class="option-btn" onclick="nextChapter(3)">进入下一章</button>
+                </div>
+            </div>
+
+            <!-- 选项B结局 -->
+            <div class="ending" id="chapter2B">
+                <p class="chapter-desc">你选择走近路，钻进了小巷。</p>
+                <p class="chapter-desc">一进去，光线立刻暗下来，只有远处微弱的光勉强照进一点点。</p>
+                <p class="chapter-desc">周围很安静，安静到只能听见自己的脚步声，在墙与墙之间弹来弹去。</p>
+                <p class="chapter-desc">你越走越快，心跳跟着脚步一起变重。</p>
+                <p class="chapter-desc">不敢看手机屏幕太亮，怕引来注意；</p>
+                <p class="chapter-desc">不敢戴耳机，怕听不清身后的动静；</p>
+                <p class="chapter-desc">不敢回头，怕一回头就看见什么。</p>
+                <p class="chapter-desc">每一步，都像在赌。</p>
+                <p class="chapter-desc">终于，你看到了小巷出口的光。</p>
+                <p class="chapter-desc">你几乎是小跑着冲出去，直到踏进小区灯火里，才敢大口喘气。</p>
+                <p class="chapter-desc">手心里，全是冷汗。</p>
+                <p class="narration">▸ 【恐惧值 +2】</p>
+                <p class="narration">▸ 旁白：你选了最快的路，也选了最让自己恐慌的一条。在恐惧岛，“快”和“安全”，从来不是一回事。</p>
+                <div class="option-group" style="margin-top: 30px;">
+                    <button class="option-btn" onclick="nextChapter(3)">进入下一章</button>
+                </div>
+            </div>
+        </div>
+
+       <!-- 第三章：职场玩笑 -->
+        <div class="chapter" id="chapter3">
+            <h2 class="chapter-title">恐惧岛 · 第三章：职场玩笑</h2>
+            <p class="chapter-desc">（界面延续前两章风格，黑底白字，此时可在标题下增加一个极细的进度条，暗示“恐惧”在累积）</p>
+            <p class="chapter-desc"><strong>恐惧岛</strong></p>
+            <p class="chapter-desc">▸ 这里没有怪兽，只有你每天都会遇到的事</p>
+            <p class="chapter-desc">项目庆功宴，包厢里灯火通明，酒过三巡，气氛变得喧闹而粘稠。</p>
+            <p class="chapter-desc">你坐在角落，刚吃完一口菜，准备拿起手机回个消息。</p>
+            <p class="chapter-desc">邻座的男同事突然提高了音量，讲了一个带颜色的段子。</p>
+            <p class="chapter-desc">笑点落在一个极具冒犯性的、指向女性身体的比喻上。</p>
+            <p class="chapter-desc">空气停滞了半秒。</p>
+            <p class="chapter-desc">紧接着，桌上爆发出一阵哄笑。有人拍着桌子，有人跟着起哄。</p>
+            <p class="chapter-desc">讲段子的男同事得意地扫视一圈，目光最终落在你身上，带着一种“你也该笑”的期待。</p>
+            <p class="chapter-desc">你握着筷子的手指，不自觉地收紧了。</p>
+            <p class="chapter-desc">坐在你旁边的女同事，用胳膊轻轻碰了你一下，嘴角扯出一个尴尬的笑，低声说：</p>
+            <p class="chapter-desc">“大家都在笑，别扫兴。”</p>
+            <p class="chapter-desc">这是职场，是体面的场合，是“玩笑”。</p>
+            <p class="chapter-desc">没有人拿着刀，没有人发出威胁。</p>
+            <p class="chapter-desc">但你清楚地感觉到，一种无形的压力，从四面八方涌过来，把你钉在座位上。</p>
+
+            <div class="option-group">
+                <button class="option-btn" onclick="chooseOption(3, 'A')">选项A：跟着笑，假装没事</button>
+                <button class="option-btn" onclick="chooseOption(3, 'B')">选项B：冷脸，说“不好笑”</button>
+            </div>
+
+            <!-- 选项A结局 -->
+            <div class="ending" id="chapter3A">
+                <p class="chapter-desc">你低下头，扯了扯嘴角，挤出一个看起来还算合群的笑。</p>
+                <p class="chapter-desc">笑声没有因为你的迟疑而停顿，包厢里很快又恢复了喧闹。</p>
+                <p class="chapter-desc">那个男同事满意地移开了目光，仿佛得到了你的“默许”。</p>
+                <p class="chapter-desc">你拿起水杯喝了一口，水是凉的，却压不住胃里翻涌的恶心。</p>
+                <p class="chapter-desc">接下来的半个小时，你吃得索然无味。</p>
+                <p class="chapter-desc">有人开始聊起另一个话题，关于“女孩子在职场别太拼，不如早点嫁人”。</p>
+                <p class="chapter-desc">你没再听，只是盯着桌布上的纹路，心里那根弦，又绷紧了一分。</p>
+                <p class="chapter-desc">散场时，大家说笑着离开。</p>
+                <p class="chapter-desc">没人觉得刚才有什么不对。</p>
+                <p class="chapter-desc">仿佛那个玩笑，只是庆功宴上的一道普通“佐料”。</p>
+                <p class="narration">▸ 【恐惧值 +1】</p>
+                <p class="narration">▸ 旁白：你用“合群”换来了安宁。但你也知道，这种安宁的代价，是默许了冒犯的存在。</p>
+                <div class="option-group" style="margin-top: 30px;">
+                    <button class="option-btn" onclick="nextChapter(4)">进入下一章</button>
+                </div>
+            </div>
+
+            <!-- 选项B结局 -->
+            <div class="ending" id="chapter3B">
+                <p class="chapter-desc">你没有笑。</p>
+                <p class="chapter-desc">你放下筷子，抬起头，迎上男同事的目光，声音不大，却足够清晰：</p>
+                <p class="chapter-desc">“这个玩笑，不好笑。”</p>
+                <p class="chapter-desc">空气，瞬间凝固了。</p>
+                <p class="chapter-desc">周围的笑声像被按了暂停键，所有人的目光，齐刷刷地聚焦在你身上。</p>
+                <p class="chapter-desc">有惊讶，有不解，也有一丝看好戏的玩味。</p>
+                <p class="chapter-desc">男同事的笑容僵在脸上，随即打了个哈哈，语气带着一丝轻慢：</p>
+                <p class="chapter-desc">“哎呀，开个玩笑而已，你怎么这么开不起玩笑？”</p>
+                <p class="chapter-desc">旁边有人出来打圆场：“别较真嘛，他就这性格。”</p>
+                <p class="chapter-desc">也有人悄悄拉你的衣角，示意你算了。</p>
+                <p class="chapter-desc">你张了张嘴，想解释“这不是开不起玩笑，是不尊重”，但看着满桌或尴尬或漠然的脸，最终什么都没说。</p>
+                <p class="chapter-desc">那顿饭，后半程鸦雀无声。</p>
+                <p class="chapter-desc">你成了那个“破坏气氛”的人。</p>
+                <p class="narration">▸ 【清醒值 +1】</p>
+                <p class="narration">▸ 旁白：你拒绝了沉默，却也尝到了“反抗”的代价。在恐惧岛，说出真话，需要比忍受更大的勇气。</p>
+                <div class="option-group" style="margin-top: 30px;">
+                    <button class="option-btn" onclick="nextChapter(4)">进入下一章</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第四章：家庭规训 -->
+        <div class="chapter" id="chapter4">
+            <h2 class="chapter-title">恐惧岛 · 第四章：家庭规训</h2>
+            <p class="chapter-desc"><strong>恐惧岛</strong></p>
+            <p class="chapter-desc">▸ 这里没有怪兽，只有你每天都会遇到的事</p>
+            <p class="chapter-desc">周末家庭聚餐。</p>
+            <p class="chapter-desc">一桌子菜，热气腾腾，气氛温和。</p>
+            <p class="chapter-desc">没有人凶你，没有人骂你。</p>
+            <p class="chapter-desc">可你从坐下的那一刻起，就隐隐知道，话题迟早会落到你身上。</p>
+            <p class="chapter-desc">果然，饭吃到一半，亲戚放下筷子，看着你，语气温和，却带着不容置疑的重量：</p>
+            <p class="chapter-desc">“也不小了，别总想着拼事业。</p>
+            <p class="chapter-desc">女孩子嘛，稳定最重要，早点结婚生子，才是正途。”</p>
+            <p class="chapter-desc">“太强势不好，太有主见也不好，以后不好嫁。”</p>
+            <p class="chapter-desc">“听我们的，都是为你好。”</p>
+            <p class="chapter-desc">父母在一旁沉默，没有反驳，像是默认了这一切。</p>
+            <p class="chapter-desc">你握着筷子的手顿了顿。</p>
+            <p class="chapter-desc">你没有做错任何事，没有伤害任何人，只是想按自己的意愿活着。</p>
+            <p class="chapter-desc">可在这些“为你好”里，你像个必须被纠正的错误。</p>
+
+            <div class="option-group">
+                <button class="option-btn" onclick="chooseOption(4, 'A')">选项A：点头敷衍，不想吵架</button>
+                <button class="option-btn" onclick="chooseOption(4, 'B')">选项B：认真告诉他们：我不想这样活</button>
+            </div>
+
+            <!-- 选项A结局 -->
+            <div class="ending" id="chapter4A">
+                <p class="chapter-desc">你低下头，轻轻“嗯”了一声。</p>
+                <p class="chapter-desc">“知道了，我会考虑的。”</p>
+                <p class="chapter-desc">亲戚满意地笑了，转头去聊别的家常。</p>
+                <p class="chapter-desc">气氛重新变得和睦，没有人再为难你。</p>
+                <p class="chapter-desc">这场小小的风波，就这么平静地过去了。</p>
+                <p class="chapter-desc">只有你自己知道，那声“嗯”里，藏着多少无奈。</p>
+                <p class="chapter-desc">你没有被说服，只是不想再争辩，不想让场面难堪，不想被贴上“叛逆”“不懂事”的标签。</p>
+                <p class="chapter-desc">你把真实的想法，又往心里藏了一层。</p>
+                <p class="chapter-desc">好像只要你足够听话，就能换来这片刻的安宁。</p>
+                <p class="narration">▸ 【恐惧值 +1】</p>
+                <p class="narration">▸ 旁白：最亲的人，用最温柔的语气，把你困进别人觉得“正确”的人生里。</p>
+                <div class="option-group" style="margin-top: 30px;">
+                    <button class="option-btn" onclick="nextChapter(5)">进入下一章</button>
+                </div>
+            </div>
+
+            <!-- 选项B结局 -->
+            <div class="ending" id="chapter4B">
+                <p class="chapter-desc">你放下筷子，抬起头，声音平静却坚定：</p>
+                <p class="chapter-desc">“我有自己的计划，我不想按你们说的那样活。”</p>
+                <p class="chapter-desc">空气安静了一瞬。</p>
+                <p class="chapter-desc">亲戚脸上的笑容淡了，语气也沉了下来：</p>
+                <p class="chapter-desc">“我们都是为你好，以后你就懂了。”</p>
+                <p class="chapter-desc">“女孩子太要强，会吃苦的。”</p>
+                <p class="chapter-desc">有人叹气，有人摇头，有人劝你别固执。</p>
+                <p class="chapter-desc">没有人真的在听你想说什么，所有人都在忙着纠正你。</p>
+                <p class="chapter-desc">连父母也轻声劝你：“别犟了，都是一家人。”</p>
+                <p class="chapter-desc">你突然觉得很累。</p>
+                <p class="chapter-desc">外面的风雨你可以扛，可来自家人的不理解，像一根软刺，扎进心里，拔不出来，也躲不开。</p>
+                <p class="narration">▸ 【清醒值 +2】</p>
+                <p class="narration">▸ 旁白：你守住了自己，却也明白，家，有时也会变成恐惧岛的一部分。</p>
+                <div class="option-group" style="margin-top: 30px;">
+                    <button class="option-btn" onclick="nextChapter(5)">进入终章</button>
+                </div>
+            </div>
+        </div>
+
+       <!-- 第五章：育儿困境 -->
+        <div class="chapter" id="chapter5">
+            <h2 class="chapter-title">恐惧岛 · 第五章：育儿困境</h2>
+            <p class="chapter-desc"><strong>恐惧岛</strong></p>
+            <p class="chapter-desc">▸ 这里没有怪兽，只有你每天都会遇到的事</p>
+            <p class="chapter-desc">你有了孩子，一个柔软的小生命。</p>
+            <p class="chapter-desc">所有人都说，这是“圆满”，是“女人最好的归宿”。</p>
+            <p class="chapter-desc">可只有你知道，从孩子出生的那一刻起，你被推上了一座更狭小、更无形的牢笼。</p>
+            <p class="chapter-desc">产假结束，你想重返职场，却被一圈人围住劝说：</p>
+            <p class="chapter-desc">“孩子还小，离不开妈妈，你在家带娃才是正事。”</p>
+            <p class="chapter-desc">“女人顾家最重要，赚钱是男人的事，别那么拼。”</p>
+            <p class="chapter-desc">“你要是去上班，孩子没人管，以后出了问题，都是你的错。”</p>
+            <p class="chapter-desc">若是选择在家带娃，日复一日的琐碎磨掉你的棱角，身边人又会说：</p>
+            <p class="chapter-desc">“你不就是在家带个孩子吗？有什么累的？”</p>
+            <p class="chapter-desc">“靠男人养着，还有什么不满意的？”</p>
+            <p class="chapter-desc">没人问你想不想要，没人关心你累不累，没人看见你夜里一次次醒来喂奶、哄睡的疲惫，也没人在意你失去自我的迷茫。</p>
+            <p class="chapter-desc">这天，孩子发烧，你一夜没合眼，清晨刚想歇口气，婆婆走进来，语气带着指责：</p>
+            <p class="chapter-desc">“肯定是你昨晚没看好，让孩子着凉了，连个孩子都带不好。”</p>
+            <p class="chapter-desc">丈夫坐在一旁刷手机，没有抬头，只是轻飘飘地说：“你多上点心，别总让妈操心。”</p>
+            <p class="chapter-desc">委屈悄悄漫上来，你张了张嘴，却没说出一句辩解的话。</p>
+            <p class="chapter-desc">在所有人眼里，“母亲”就该无所不能，就该牺牲一切，就该把自己的需求，排在最后一位。</p>
+
+            <div class="option-group">
+                <button class="option-btn" onclick="chooseOption(5, 'A')">选项A：沉默忍耐，不想引发争吵</button>
+                <button class="option-btn" onclick="chooseOption(5, 'B')">选项B：说出委屈，反驳他们的指责</button>
+            </div>
+
+            <!-- 选项A结局 -->
+            <div class="ending" id="chapter5A">
+                <p class="chapter-desc">你低下头，轻轻应了一句：“是我没看好，以后会注意。”</p>
+                <p class="chapter-desc">婆婆哼了一声，转身去厨房忙活，嘴里还在絮絮叨叨地抱怨。</p>
+                <p class="chapter-desc">丈夫依旧低头刷着手机，仿佛刚才的一切都与他无关。</p>
+                <p class="chapter-desc">你抱着还在发烧的孩子，坐在沙发上，浑身疲惫。</p>
+                <p class="chapter-desc">你习惯了忍耐，习惯了把委屈咽进肚子里，习惯了扮演一个“合格”的母亲、“懂事”的妻子、“孝顺”的儿媳。</p>
+                <p class="chapter-desc">可只有你自己知道，那层“合格”的外壳下，藏着一个快要窒息的自己。</p>
+                <p class="chapter-desc">你失去了工作，失去了社交，失去了自己的时间，甚至失去了难过的资格——因为所有人都会说，“你是妈妈啊”。</p>
+                <p class="narration">▸ 【恐惧值 +2】</p>
+                <p class="narration">▸ 旁白：成为母亲，你被赋予了无数标签，却唯独失去了“你自己”。恐惧，变成了日复一日的自我消耗。</p>
+                <div class="option-group" style="margin-top: 30px;">
+                    <button class="option-btn" onclick="nextChapter(6)">进入终章</button>
+                </div>
+            </div>
+
+            <!-- 选项B结局 -->
+            <div class="ending" id="chapter5B">
+                <p class="chapter-desc">你抱着孩子，抬起头，声音平静却坚定：</p>
+                <p class="chapter-desc">“我一夜没睡，一直守着孩子，不是我没看好。”</p>
+                <p class="chapter-desc">“带孩子不是我一个人的事，他也是孩子的爸爸，不能什么都不管。”</p>
+                <p class="chapter-desc">婆婆愣住了，随即脸色沉了下来：“我还不是为了孩子？你怎么这么不懂事，一点都不体谅人。”</p>
+                <p class="chapter-desc">丈夫终于放下手机，皱着眉劝你：“别跟妈吵了，多大点事，妈也是为了孩子好。”</p>
+                <p class="chapter-desc">没有人站在你这边，没有人认可你的付出，没有人看见你的委屈。</p>
+                <p class="chapter-desc">你看着他们，忽然明白，这场争吵，从一开始就没有赢家。</p>
+                <p class="chapter-desc">你只是想被看见，想被理解，想有人告诉你，你不是一个人在扛，想有人承认，母亲的付出，从来都不是理所当然。</p>
+                <p class="chapter-desc">虽未得到想要的回应，但你终于敢说出自己的委屈，不再一味妥协。</p>
+                <p class="narration">▸ 【清醒值 +2】</p>
+                <p class="narration">▸ 旁白：你没有赢，但你守住了自己的底线。在育儿的牢笼里，哪怕只是发出一点声音，也是一种反抗。</p>
+                <div class="option-group" style="margin-top: 30px;">
+                    <button class="option-btn" onclick="nextChapter(6)">进入终章</button>
+                </div>
+            </div>
+        </div><!-- 终章：恐惧岛的真相 -->
+        <div class="chapter" id="chapter6">
+            <h2 class="chapter-title">恐惧岛 · 终章：恐惧岛的真相</h2>
+            <p class="chapter-desc"><strong>恐惧岛</strong></p>
+            <p class="chapter-desc">▸ 这里没有怪兽，只有你每天都会遇到的事</p>
+            <p class="chapter-desc">你走过清晨的衣柜，走过深夜的路口，</p>
+            <p class="chapter-desc">走过喧闹的饭局，走过热气腾腾的家，</p>
+            <p class="chapter-desc">走过育儿的琐碎，走过无人理解的疲惫。</p>
+            <p class="chapter-desc">你以为，这座岛到处都是<strong>敌人</strong>。</p>
+            <p class="chapter-desc">可走到最后你才发现：</p>
+            <p class="chapter-desc">这里没有青面獠牙的怪物，</p>
+            <p class="chapter-desc">没有举着刀的歹徒，</p>
+            <p class="chapter-desc">没有写着“禁止”的警示牌。</p>
+            <p class="chapter-desc">困住你的，</p>
+            <p class="chapter-desc">是每一句<strong>“为你好”</strong>，</p>
+            <p class="chapter-desc">是每一次<strong>“忍一忍”</strong>，</p>
+            <p class="chapter-desc">是每一个<strong>“女孩子就该”</strong>，</p>
+            <p class="chapter-desc">是每一场<strong>“你别太敏感”</strong>，</p>
+            <p class="chapter-desc">是每一次<strong>“你是妈妈啊”</strong>。</p>
+            <p class="chapter-desc">恐惧岛最恐怖的真相是：</p>
+            <p class="chapter-desc" style="text-align: center; font-weight: bold;">它把伤害，变成了正常。</p>
+            <p class="chapter-desc" style="text-align: center; font-weight: bold;">把警惕，变成了应该。</p>
+            <p class="chapter-desc" style="text-align: center; font-weight: bold;">把委屈，变成了懂事。</p>
+            <p class="chapter-desc" style="text-align: center; font-weight: bold;">把你的自我，变成了可以被牺牲的东西。</p>
+            <p class="chapter-desc">你不是天生胆小，</p>
+            <p class="chapter-desc">不是天生敏感，</p>
+            <p class="chapter-desc">不是天生就该小心翼翼，</p>
+            <p class="chapter-desc">更不是天生就该为了别人，牺牲自己。</p>
+            <p class="chapter-desc">你只是——</p>
+            <p class="chapter-desc" style="text-align: center; font-weight: bold;">活在一座<strong>从小就教你恐惧</strong>的岛上。</p>
+
+            <h3 style="text-align: center; margin: 20px 0; font-size: 20px;">最终结局判定</h3>
+            <div id="finalEnding">
+                <!-- 结局1：适应者（恐惧值更高） -->
+                <div class="ending" id="ending1">
+                    <h3 style="text-align: center; margin-bottom: 15px; color: #ff6b6b;">结局一：适应者（恐惧值更高）</h3>
+                    <p class="chapter-desc">你学会了所有生存法则。</p>
+                    <p class="chapter-desc">你不再穿喜欢的衣服，不再晚归，不再反驳，不再坚持，</p>
+                    <p class="chapter-desc">不再抱怨育儿的疲惫，不再奢求被理解、被看见。</p>
+                    <p class="chapter-desc">你安全、得体、合群、“合格”。</p>
+                    <p class="chapter-desc">所有人都夸你：懂事、稳重、让人放心、是个好妈妈、好妻子。</p>
+                    <p class="chapter-desc">只有你自己知道：</p>
+                    <p class="chapter-desc" style="text-align: center; font-weight: bold;">你把自己，一点点弄丢了。</p>
+                    <p class="chapter-desc" style="text-align: center; margin: 15px 0;">【屏幕文字】</p>
+                    <p class="chapter-desc" style="text-align: center;">你没有被打败。</p>
+                    <p class="chapter-desc" style="text-align: center;">你只是，活成了恐惧岛希望的样子。</p>
+                </div>
+
+                <!-- 结局2：清醒者（清醒值更高） -->
+                <div class="ending" id="ending2">
+                    <h3 style="text-align: center; margin-bottom: 15px; color: #4ecdc4;">结局二：清醒者（清醒值更高）</h3>
+                    <p class="chapter-desc">你依然会害怕。</p>
+                    <p class="chapter-desc">天黑会紧张，被打量会不适，被冒犯会难过，育儿会疲惫，会被不理解、被指责。</p>
+                    <p class="chapter-desc">但你不再责怪自己。</p>
+                    <p class="chapter-desc">不是你太敏感，</p>
+                    <p class="chapter-desc">不是你穿错了衣服，</p>
+                    <p class="chapter-desc">不是你不该出门，</p>
+                    <p class="chapter-desc">不是你不够温顺，</p>
+                    <p class="chapter-desc">更不是你不配被理解、被善待。</p>
+                    <p class="chapter-desc" style="text-align: center; font-weight: bold;">错的，从来都不是你。</p>
+                    <p class="chapter-desc">是这座需要你时刻恐惧的岛，是那些默认伤害、漠视付出的人。</p>
+                    <p class="chapter-desc" style="text-align: center; margin: 15px 0;">【屏幕文字】</p>
+                    <p class="chapter-desc" style="text-align: center;">你没能离开恐惧岛。</p>
+                    <p class="chapter-desc" style="text-align: center;">但你，<strong>终于看清了它</strong>。</p>
+                    <p class="chapter-desc" style="text-align: center;">你守住了自己。</p>
+                </div>
+            </div>
+
+            <h3 style="text-align: center; margin: 28px 0 18px; font-size: 20px;">尾声（全剧终）</h3>
+            <p class="chapter-desc" style="text-indent: 0; text-align: center;">恐惧岛从来不是某一座岛。</p>
+            <p class="chapter-desc" style="text-indent: 0; text-align: center;">它是无数女性，</p>
+            <p class="chapter-desc" style="text-indent: 0; text-align: center;">用一生的警惕、忍耐、委屈、付出，</p>
+            <p class="chapter-desc" style="text-indent: 0; text-align: center;">共同撑起来的日常。</p>
+            <p class="chapter-desc" style="text-indent: 0; text-align: center;">愿有一天，</p>
+            <p class="chapter-desc" style="text-indent: 0; text-align: center;">我们不必再为了安全藏起自己，</p>
+            <p class="chapter-desc" style="text-indent: 0; text-align: center;">不必再为了合群吞下委屈，</p>
+            <p class="chapter-desc" style="text-indent: 0; text-align: center;">不必再在“做自己”和“活下去”之间做选择，</p>
+            <p class="chapter-desc" style="text-indent: 0; text-align: center;">不必再一个人扛起育儿的所有重量，</p>
+            <p class="chapter-desc" style="text-indent: 0; text-align: center;">不必再因为“是女人”“是妈妈”，就失去自我。</p>
+            <p class="chapter-desc" style="text-indent: 0; text-align: center;">愿有一天，</p>
+            <p class="chapter-desc" style="text-indent: 0; text-align: center;">恐惧岛，不再是任何人的故乡。</p>
+            <p class="chapter-desc" style="text-indent: 0; text-align: center; font-weight: bold;">—— 全剧终 ——</p>
+
+            <div class="option-group" style="margin-top: 30px;">
+                <button class="option-btn" onclick="restartStory()">重新开始</button>
+            </div>
+
+            <p class="footer-note">愿每一次表达都被听见，愿每一种生活都被尊重。</p>
+        </div>
+    </div>
+
+    <script>
+        let fearCount = 0;
+        let awakeCount = 0;
+        let currentChapter = 1;
+        const chosenChapters = new Set();
+        const selectedOptions = {};
+
+        const scoreMap = {
+            '1A': { fear: 1, awake: 0 },
+            '1B': { fear: 0, awake: 1 },
+            '2A': { fear: 1, awake: 0 },
+            '2B': { fear: 2, awake: 0 },
+            '3A': { fear: 1, awake: 0 },
+            '3B': { fear: 0, awake: 1 },
+            '4A': { fear: 1, awake: 0 },
+            '4B': { fear: 0, awake: 2 },
+            '5A': { fear: 2, awake: 0 },
+            '5B': { fear: 0, awake: 2 }
+        };
+
+        function updateStats() {
+            document.getElementById('fearCount').textContent = fearCount;
+            document.getElementById('awakeCount').textContent = awakeCount;
+        }
+
+        function hideChapterOptionGroup(chapterEl) {
+            const optionGroups = chapterEl.querySelectorAll('.option-group');
+            if (optionGroups.length > 0) {
+                optionGroups[0].style.display = 'none';
+            }
+        }
+
+        function chooseOption(chapter, option) {
+            const chapterEl = document.getElementById(`chapter${chapter}`);
+            const endingEl = document.getElementById(`chapter${chapter}${option}`);
+            const key = `${chapter}${option}`;
+
+            if (!chapterEl || !endingEl) return;
+
+            hideChapterOptionGroup(chapterEl);
+
+            const endings = chapterEl.querySelectorAll('.ending');
+            endings.forEach(el => el.classList.remove('active'));
+            endingEl.classList.add('active');
+            selectedOptions[chapter] = option;
+
+            if (!chosenChapters.has(chapter)) {
+                const delta = scoreMap[key] || { fear: 0, awake: 0 };
+                fearCount += delta.fear;
+                awakeCount += delta.awake;
+                chosenChapters.add(chapter);
+                updateStats();
+            }
+        }
+
+        function nextChapter(chapterNumber) {
+            if (currentChapter === 4 && selectedOptions[4] === 'B' && chapterNumber === 5) {
+                chapterNumber = 6;
+            }
+
+            const currentEl = document.getElementById(`chapter${currentChapter}`);
+            const nextEl = document.getElementById(`chapter${chapterNumber}`);
+            if (!nextEl) return;
+
+            if (currentEl) {
+                currentEl.classList.remove('active');
+            }
+
+            nextEl.classList.add('active');
+            currentChapter = chapterNumber;
+
+            if (chapterNumber === 6) {
+                showFinalEnding();
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showFinalEnding() {
+            const ending1 = document.getElementById('ending1');
+            const ending2 = document.getElementById('ending2');
+            if (!ending1 || !ending2) return;
+
+            ending1.classList.remove('active');
+            ending2.classList.remove('active');
+
+            if (fearCount > awakeCount) {
+                ending1.classList.add('active');
+            } else {
+                ending2.classList.add('active');
+            }
+        }
+
+        function restartStory() {
+            window.location.reload();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const first = document.getElementById('chapter1');
+            if (first) {
+                first.classList.add('active');
+            }
+            updateStats();
+        });
+    </script>
+</body>
+</html>
